@@ -7,11 +7,11 @@
 % Date: 11/28/2018
 
 clear,clc
-parpool('local');
+% parpool('local');
 
 addpath(genpath('utilities'));
 file_dir = './data_proc';
-filename_list = {'twitter'};
+filename_list = {'organic'};
 
 randdoc_scheme = 1;     % if 1, RF features - uniform distribution
 wordemb_scheme = 1;     % if 1, use pre-trained word2vec
@@ -34,7 +34,7 @@ CV = 10; % number of folders of cross validation
 for jjj = 1:length(filename_list)
     filename = filename_list{jjj};
     disp(filename);
-    if strcmp(filename, 'twitter')
+    if strcmp(filename, 'organic')
         filename_postfix = '-emd_tr_te_split.mat';
     end   
     
@@ -175,4 +175,4 @@ for jjj = 1:length(filename_list)
         '_de' num2str(docemb_scheme) '_R' num2str(R) '_'  num2str(CV) 'fold_CV'];
     save(savefilename,'info');
 end
-delete(gcp);
+%delete(gcp);

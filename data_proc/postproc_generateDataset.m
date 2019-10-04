@@ -9,8 +9,8 @@
     clear,clc
     split_ratio = 0.7; % train/test split ratio
     file_dir = './'; 
-    newfilename = 'twitter-emd_tr_te_split.mat';
-    oldfilename = 'twitter.mat';
+    newfilename = 'organic-emd_tr_te_split.mat';
+    oldfilename = 'organic.mat';
     olddata = load(strcat(file_dir,'/',oldfilename));
     
     BOW_X_new = olddata.BOW_X;

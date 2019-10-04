@@ -1,6 +1,22 @@
 import gensim, pdb, sys, scipy.io as io, numpy as np, pickle, string
 from collections import Counter
 import codecs
+import argparse
+
+parser = argparse.ArgumentParser(description='Preprocess data into .mat form')
+parser.add_argument('--pretrain', dest="pretrain", type=str,
+                    default="../../data/pretrain/GoogleNews-vectors-negative300.bin",
+                    help='path to pretrained word embedding file')
+parser.add_argument('--train', dest="train_dataset", type=str,
+                    default="../../data/annotated_parsed/organic.csv",
+                    help='path to training dataset')
+parser.add_argument('--out', dest="save_file", type=str, default="out.pk",
+                    help='path to save the pickle file')
+parser.add_argument('--mat', dest="save_file_mat", type=str, default="out.mat",
+                    help="path to save the .mat file")
+
+args = parser.parse_args()
+
 
 # read glove vector from pretrain model
 def getWordmap(textfile):
@@ -96,25 +112,25 @@ def read_line_by_line(dataset_name,C,model,vec_size):
 
 def main():
     # 0. load word2vec model (trained on Google News)
-    model = gensim.models.KeyedVectors.load_word2vec_format('/Users/teddywu/Google Drive/Public/Datasets/data_text/pretrain_word2vec_gn/GoogleNews-vectors-negative300.bin', binary=True)
+    model = gensim.models.KeyedVectors.load_word2vec_format(args.pretrain, binary=True)
     #modelfile = './pretrain_glove_cc/glove.840B.300d.txt'
     #model = getWordmap(modelfile)
     vec_size = 300
 
    # 1. specify train/test datasets
-    train_dataset = sys.argv[1] # e.g.: 'twitter.txt'
-    save_file     = sys.argv[2] # e.g.: 'twitter.pk'
-    save_file_mat = sys.argv[3] # e.g.: 'twitter.mat'
+    # train_dataset = sys.argv[1] # e.g.: 'twitter.txt'
+    # save_file     = sys.argv[2] # e.g.: 'twitter.pk'
+    # save_file_mat = sys.argv[3] # e.g.: 'twitter.mat'
 
     # 2. read document data
-    (X,BOW_X,Y,C,words)  = read_line_by_line(train_dataset,[],model,vec_size)
-
+    (X,BOW_X,Y,C,words)  = read_line_by_line(args.train_dataset,[],model,vec_size)
+    print "Number of sentences: %d" % X.shape[0]
     # 3. save pickle of extracted variables
-    # with open(save_file, 'w') as f:
-    #    pickle.dump([X, BOW_X, Y, C, words], f)
+    with open(args.save_file, 'w') as f:
+       pickle.dump([X, BOW_X, Y, C, words], f)
 
     # 4. (optional) save a Matlab .mat file
-    io.savemat(save_file_mat,mdict={'X': X, 'BOW_X': BOW_X, 'Y': Y, 'C': C, 'words': words}, do_compression=True)
+    io.savemat(args.save_file_mat,mdict={'X': X, 'BOW_X': BOW_X, 'Y': Y, 'C': C, 'words': words}, do_compression=True)
 
 if __name__ == "__main__":
     main()

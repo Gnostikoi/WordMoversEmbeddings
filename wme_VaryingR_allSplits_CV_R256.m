@@ -9,11 +9,11 @@
 
 clear,clc
 nthreads = 4; % set as many as your cpu cores
-parpool('local', nthreads);
+% parpool('local', nthreads);
 
 addpath(genpath('utilities'));
 file_dir = './data_proc';
-filename_list = {'twitter'};
+filename_list = {'organic'};
 
 randdoc_scheme = 1;     % if 1, RF features - uniform distribution
 wordemb_scheme = 1;     % if 1, use pre-trained word2vec
@@ -31,7 +31,7 @@ for jjj = 1:length(filename_list)
     info = [];
     filename = filename_list{jjj};
     disp(filename);
-    if strcmp(filename, 'twitter')
+    if strcmp(filename, 'organic')
         if wordemb_scheme == 1
             if wordweight_scheme == 1
                 if docemb_scheme == 1
@@ -119,4 +119,4 @@ for jjj = 1:length(filename_list)
     save(savefilename,'info')
 
 end
-delete(gcp);
+% delete(gcp);
