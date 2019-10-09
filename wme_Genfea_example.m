@@ -19,7 +19,7 @@ gamma = 0.07; % if gamma=-1, use wmd distance directly;
           % otherwise, use exp(-gamma*wmd)
 R = 256; % number of random documents
 DMin = 1; % minimum number of random words in a random document
-DMax = 3; % maximum number of random words in a random document
+DMax = 9; % maximum number of random words in a random document
 dataSplit = 1; % we have total 5 different data splits for Train/Test
 randdoc_scheme = 1; % if 1, RF features - uniform distribution
 wordweight_scheme = 1; % if 1, use nbow

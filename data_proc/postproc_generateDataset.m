@@ -34,7 +34,7 @@
     TR = IndexMatrix(:,train_num+1:num_docs);
     
     % keep most frequent words in a document in case of long document
-    numWordsToKeep = 500;
+    numWordsToKeep = 5000;
     for i = 1:num_docs
         [temp,I] = sort(BOW_X_new{i},'descend');
         L = length(I); % number of total words in a document
